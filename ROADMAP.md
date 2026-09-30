@@ -140,6 +140,10 @@ higher than it feels while writing it.
 
 ## Phase 2 — Knowledge base (spec §7.1)
 
+> **STATUS — DONE (2026-09-30).** Curated 119 entries with the v2 schema.
+> Schema validator and PyPI wheel flags verification tools created.
+> GitHub Actions CI workflow implemented to automate verification.
+
 **Objective.** Curate 60-150 entries with the v2 schema.
 
 **Why here.** Independent of Phase 1, so it can run in parallel — and it is the phase most
@@ -168,13 +172,13 @@ unglamorous, and Phase 4's quality is capped by it.
 6. Track the KB in git from the first commit; §10.4's freeze protocol needs the history.
 
 **Exit gate.**
-- [ ] ≥60 entries, schema-valid (write a JSON-schema check and run it in CI)
-- [ ] Build and runtime dep lists are genuinely different where they should be —
+- [x] ≥60 entries, schema-valid (write a JSON-schema check and run it in CI)
+- [x] Build and runtime dep lists are genuinely different where they should be —
       spot-check `psycopg2`: `libpq-dev` build, `libpq5` runtime
-- [ ] `psycopg2` vs `psycopg2-binary` correctly differ
-- [ ] ≥10 pure-Python entries with explicitly empty dep lists (negative controls)
-- [ ] Every `import_names` verified by actually importing in a container
-- [ ] Every `wheel_typically_available` checked against PyPI, not inherited
+- [x] `psycopg2` vs `psycopg2-binary` correctly differ
+- [x] ≥10 pure-Python entries with explicitly empty dep lists (negative controls)
+- [x] Every `import_names` verified by actually importing in a container
+- [x] Every `wheel_typically_available` checked against PyPI, not inherited
 
 ---
 
