@@ -196,10 +196,10 @@ selection — §9.1 keys off the CUDA signal and Python version only.) Phase 5 d
 architecture type rules; a hybrid Python+Node fixture.
 
 **Exit gate.**
-- [ ] Python primary on all Python fixtures
-- [ ] Node.js detected as *secondary* on the hybrid fixture, not primary
-- [ ] `WEB_API` vs `BATCH_JOB` correct on fixtures that differ only in EXPOSE/CMD
-- [ ] Weights read from config; the config values used appear in the report
+- [x] Python primary on all Python fixtures
+- [x] Node.js detected as *secondary* on the hybrid fixture, not primary
+- [x] `WEB_API` vs `BATCH_JOB` correct on fixtures that differ only in EXPOSE/CMD
+- [x] Weights read from config; the config values used appear in the report
 
 ---
 

@@ -1,0 +1,16 @@
+weights:
+  base_image:
+    python: 10
+    node: 10
+  run_command:
+    pip: 5
+    npm: 5
+  cmd_keyword:
+    python: 10
+    node: 10
+  copy_manifest:
+    requirements: 5
+    package_json: 5
+
+thresholds:
+  secondary_language: 5
