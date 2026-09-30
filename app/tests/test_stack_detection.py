@@ -5,7 +5,7 @@ from __future__ import annotations
 from dockerstage.parser.dockerfile_parser import parse_dockerfile
 from dockerstage.stack_detection import detect_stack
 
-from _util import fixture, available_tokenizers
+from _util import fixture, available_tokenizers  # pyrefly: ignore [missing-import]
 
 
 def test_python_primary_on_flask():
