@@ -28,3 +28,6 @@ test = ["pytest>=7.0"]
 pythonpath = ["."]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+
+[tool.setuptools]
+packages = ["dockerstage"]
