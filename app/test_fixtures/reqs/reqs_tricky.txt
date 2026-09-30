@@ -1,0 +1,12 @@
+# base includes another file
+-r base.txt
+-c constraints.txt
+
+Django>=4.2,<5.0
+uvicorn[standard]==0.23.2
+numpy ; python_version >= "3.8"
+requests  # with an inline comment
+git+https://github.com/psf/requests.git@main#egg=requests
+-e ./local_pkg
+--extra-index-url https://example.com/simple
+./some/local/artifact.whl

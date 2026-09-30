@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dockerstage"
+version = "0.1.0"
+description = "Refactor single-stage Python/ML Dockerfiles into multi-stage builds with package-level dependency resolution"
+requires-python = ">=3.9"
+dependencies = [
+    # Primary Dockerfile tokenizer (spec §4). A stdlib fallback is used only when
+    # this is not importable, so the package still runs without it.
+    "dockerfile-parse>=2.0",
+    # PEP 503/508 name normalization and requirement parsing (spec §5).
+    "packaging>=21.0",
+    # Conda environment.yml detection (spec §5.4).
+    "pyyaml>=5.0",
+]
+
+[project.optional-dependencies]
+# TOML parsing for pyproject.toml detection on Python < 3.11 (spec §5.4). On
+# 3.11+ the stdlib tomllib is used; without either, a regex fallback runs.
+toml = ["tomli>=1.2 ; python_version < '3.11'"]
+test = ["pytest>=7.0"]
+
+[tool.pytest.ini_options]
+# Makes `import dockerstage` work from the app/ dir without installing the package.
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

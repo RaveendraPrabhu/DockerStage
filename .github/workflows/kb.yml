@@ -1,0 +1,50 @@
+name: knowledge-base
+
+# Phase 2 exit gate (spec §7.1 / ROADMAP), enforced on every push & PR.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # Gate items 1-4: schema validity, entry count, psycopg2 build/runtime
+  # asymmetry, psycopg2 vs -binary, >=10 negative controls. Offline, fast.
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package (dockerfile-parse, packaging, pyyaml, pytest)
+        run: pip install -e "./app[test]"
+      - name: Schema-validate the KB (gate item 1)
+        run: python app/dockerstage/knowledge_base.py
+      - name: Run the test suite (gate items 1-4)
+        working-directory: app
+        run: pytest -q
+
+  # Gate items 5-6: the live checks. ubuntu-latest runners have Docker + network,
+  # so these run automatically here -- no manual step. Both tools are stdlib-only.
+  verify-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Self-test the verify tools (offline)
+        run: |
+          python app/tools/verify_wheels.py --selftest
+          python app/tools/verify_imports.py --selftest
+      # Item 6: every wheel_typically_available flag vs live PyPI (all entries).
+      - name: Verify wheel flags against PyPI (gate item 6)
+        run: python app/tools/verify_wheels.py
+      # Item 5: import in a real python:3.11-slim container. Wheel-having packages
+      # + negative controls only -- source-only ones (psycopg2, mysqlclient) need
+      # build deps and are import-verified by Phase 6's real build, not this smoke.
+      # Full sweep on demand:  python app/tools/verify_imports.py
+      - name: Verify import names in a container (gate item 5, wheel subset)
+        run: >
+          python app/tools/verify_imports.py --only
+          numpy,scipy,pandas,lxml,pillow,opencv-python,matplotlib,scikit-learn,cryptography,psycopg2-binary,pyarrow,h5py,grpcio,flask,fastapi,uvicorn,requests,pydantic

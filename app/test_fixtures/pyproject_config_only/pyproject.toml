@@ -1,0 +1,9 @@
+# Config-only pyproject: a build backend + a linter config, but NO application
+# dependencies declared. Mirrors the Phase 1 exit-gate example exactly.
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"

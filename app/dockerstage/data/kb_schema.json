@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dockerstage/kb_schema.json",
+  "title": "dockerstage knowledge base (spec v2 §7.1)",
+  "description": "Per-package native-dependency knowledge base. Entry shape is fixed by PROJECT_SPEC.md §7.1 including the three v2 changes: distro-keyed dep maps, import_names, verified_by_build.",
+  "type": "object",
+  "required": ["schema_version", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0",
+      "description": "Tracks the spec §7.1 schema revision, not the KB content version."
+    },
+    "generated_notes": {
+      "type": "string",
+      "description": "Free-text provenance/curation conventions for the file as a whole."
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 60,
+      "description": "Spec §7.1 initial target size is 60-150 entries.",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "distroDepMap": {
+      "type": "object",
+      "description": "System package names keyed by distro FAMILY (v2 change (a)). The debian key is mandatory; alpine is optional and currently unused under the §9.1 Debian-only output policy.",
+      "required": ["debian"],
+      "additionalProperties": false,
+      "properties": {
+        "debian": { "$ref": "#/$defs/pkgList" },
+        "alpine": { "$ref": "#/$defs/pkgList" }
+      }
+    },
+    "pkgList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z0-9][a-z0-9+.-]*$",
+        "description": "A real distro package name, lowercase. Must be installable by the target package manager."
+      },
+      "uniqueItems": true
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "name",
+        "version_range",
+        "import_names",
+        "build_time_system_deps",
+        "runtime_system_deps",
+        "extras",
+        "wheel_typically_available",
+        "source",
+        "confidence",
+        "verified_by_build",
+        "notes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$",
+          "description": "PEP 503 normalised distribution name (lowercase, runs of -_. collapsed to a single -)."
+        },
+        "version_range": {
+          "type": "string",
+          "minLength": 1,
+          "description": "'*' unless native deps genuinely differ by version."
+        },
+        "import_names": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "v2 change (b): module names for the §10.2 Test A smoke test. Cannot be derived from the distribution name. MAY be empty for console-script-only packages (e.g. gunicorn), which Test C covers instead."
+        },
+        "build_time_system_deps": { "$ref": "#/$defs/distroDepMap" },
+        "runtime_system_deps": { "$ref": "#/$defs/distroDepMap" },
+        "extras": {
+          "type": "object",
+          "description": "Variant-dependent deps, keyed by PEP 508 extra or variant name (e.g. uvicorn[standard], torch cuda).",
+          "additionalProperties": { "$ref": "#/$defs/extraVariant" }
+        },
+        "wheel_typically_available": {
+          "type": "boolean",
+          "description": "Documentation aid and offline fallback ONLY. The live §7.2 check is authoritative and must win any disagreement. Verify against PyPI during curation; never inherit."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["curated", "conda-forge-derived", "inferred"],
+          "description": "Recorded honestly per entry; §14.3 reports accuracy broken down by this field."
+        },
+        "confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "verified_by_build": {
+          "type": "boolean",
+          "description": "v2 change (c): set true only once a §10 build actually confirms the entry."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "extraVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "build_time_system_deps": { "$ref": "#/$defs/distroDepMap" },
+        "runtime_system_deps": { "$ref": "#/$defs/distroDepMap" },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

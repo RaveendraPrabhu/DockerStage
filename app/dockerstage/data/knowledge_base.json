@@ -1,0 +1,2603 @@
+{
+  "schema_version": "2.0",
+  "generated_notes": "dockerstage knowledge base, spec v2 section 7.1. CURATION CONVENTIONS: (1) Debian package names target BOOKWORM, the codename implied by python:3.11-slim and later (spec 9.1 forbids choosing a codename independently); names that differ on bullseye or trixie are called out in the entry's notes. (2) build_time_system_deps lists what a SOURCE build needs, including the compiler and python3-dev; -dev package names are stable across Debian releases. (3) runtime_system_deps lists shared libraries required on the TYPICAL install path - populated when the package is commonly source-built or the wheel is known not to vendor the library (lxml, opencv-python, psycopg2, mysqlclient, xgboost), and empty when wheels reliably vendor everything. Where a source build would need extra runtime libs that the wheel vendors, they are recorded in notes with the prefix 'source-build runtime:' rather than installed unconditionally, because installing them always would bloat every image for a path that is rarely taken. This is a known modelling limitation, not an oversight. (4) All wheel_typically_available values were curated fresh for this file, NOT inherited from spec v1 (whose lxml=false was wrong). They are not yet machine-verified against PyPI: run tools/verify_wheels.py. (5) verified_by_build is false everywhere until a section 10 build confirms the entry; run tools/verify_imports.py to check import_names in a container.",
+  "entries": [
+    {
+      "name": "aiohttp",
+      "version_range": "*",
+      "import_names": [
+        "aiohttp"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "alembic",
+      "version_range": "*",
+      "import_names": [
+        "alembic"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "anyio",
+      "version_range": "*",
+      "import_names": [
+        "anyio"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "asyncpg",
+      "version_range": "*",
+      "import_names": [
+        "asyncpg"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.93,
+      "verified_by_build": false,
+      "notes": "C extension, but speaks the PostgreSQL wire protocol directly - no libpq linkage at all, so no libpq5 at runtime. Third distinct answer for 'a Postgres driver'."
+    },
+    {
+      "name": "attrs",
+      "version_range": "*",
+      "import_names": [
+        "attr",
+        "attrs"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Ships two importable top-level modules; both are checked."
+    },
+    {
+      "name": "azure-storage-blob",
+      "version_range": "*",
+      "import_names": [
+        "azure.storage.blob"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Namespace-package import path."
+    },
+    {
+      "name": "bcrypt",
+      "version_range": "*",
+      "import_names": [
+        "bcrypt"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Rust extension in current releases; older versions were C against libffi."
+    },
+    {
+      "name": "beautifulsoup4",
+      "version_range": "*",
+      "import_names": [
+        "bs4"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Import name is not derivable from the distribution name."
+    },
+    {
+      "name": "boto3",
+      "version_range": "*",
+      "import_names": [
+        "boto3"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "botocore",
+      "version_range": "*",
+      "import_names": [
+        "botocore"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "celery",
+      "version_range": "*",
+      "import_names": [
+        "celery"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "certifi",
+      "version_range": "*",
+      "import_names": [
+        "certifi"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "cffi",
+      "version_range": "*",
+      "import_names": [
+        "cffi"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libffi-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "C extension against libffi. source-build runtime: libffi8 on bookworm (libffi7 on bullseye). Wheels vendor it."
+    },
+    {
+      "name": "charset-normalizer",
+      "version_range": "*",
+      "import_names": [
+        "charset_normalizer"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. mypyc speedups are optional."
+    },
+    {
+      "name": "click",
+      "version_range": "*",
+      "import_names": [
+        "click"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "confluent-kafka",
+      "version_range": "*",
+      "import_names": [
+        "confluent_kafka"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "librdkafka-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.8,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is hyphen-to-underscore. source-build runtime: librdkafka1."
+    },
+    {
+      "name": "cryptography",
+      "version_range": "*",
+      "import_names": [
+        "cryptography"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libssl-dev",
+          "libffi-dev",
+          "pkg-config",
+          "cargo",
+          "rustc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Modern versions need a Rust toolchain to build from source, which is a large build-stage cost and a strong argument for using the wheel. source-build runtime: libssl3 on bookworm (libssl1.1 on bullseye)."
+    },
+    {
+      "name": "cython",
+      "version_range": "*",
+      "import_names": [
+        "Cython"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Build-time tool rather than a runtime dependency; capitalised import name. Emits C that other packages compile, so its presence in a manifest is a signal the build stage needs a compiler."
+    },
+    {
+      "name": "django",
+      "version_range": "*",
+      "import_names": [
+        "django"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "duckdb",
+      "version_range": "*",
+      "import_names": [
+        "duckdb"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Very long C++ source build; prefer the wheel."
+    },
+    {
+      "name": "fastapi",
+      "version_range": "*",
+      "import_names": [
+        "fastapi"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "filelock",
+      "version_range": "*",
+      "import_names": [
+        "filelock"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "flask",
+      "version_range": "*",
+      "import_names": [
+        "flask"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "flask-cors",
+      "version_range": "*",
+      "import_names": [
+        "flask_cors"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Hyphen-to-underscore."
+    },
+    {
+      "name": "frozenlist",
+      "version_range": "*",
+      "import_names": [
+        "frozenlist"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "fsspec",
+      "version_range": "*",
+      "import_names": [
+        "fsspec"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "geopandas",
+      "version_range": "*",
+      "import_names": [
+        "geopandas"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Native code lives in its shapely/pyogrio dependencies."
+    },
+    {
+      "name": "gevent",
+      "version_range": "*",
+      "import_names": [
+        "gevent"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Vendors libev and c-ares in the sdist."
+    },
+    {
+      "name": "google-cloud-storage",
+      "version_range": "*",
+      "import_names": [
+        "google.cloud.storage"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Namespace-package import path."
+    },
+    {
+      "name": "greenlet",
+      "version_range": "*",
+      "import_names": [
+        "greenlet"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "grpcio",
+      "version_range": "*",
+      "import_names": [
+        "grpc"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is not derivable (grpcio -> grpc). Source builds are notoriously slow (tens of minutes); prefer the wheel."
+    },
+    {
+      "name": "grpcio-tools",
+      "version_range": "*",
+      "import_names": [
+        "grpc_tools"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is not derivable. Build-time codegen tool."
+    },
+    {
+      "name": "gunicorn",
+      "version_range": "*",
+      "import_names": [],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. No importable top-level module is checked - gunicorn is a console script, so spec 10.2 Test C covers it instead of Test A."
+    },
+    {
+      "name": "h11",
+      "version_range": "*",
+      "import_names": [
+        "h11"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "h5py",
+      "version_range": "*",
+      "import_names": [
+        "h5py"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libhdf5-dev",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: the libhdf5 runtime package, whose name is release-dependent (libhdf5-103-1 on bookworm, libhdf5-103 on bullseye)."
+    },
+    {
+      "name": "httptools",
+      "version_range": "*",
+      "import_names": [
+        "httptools"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Pulled in by uvicorn[standard]."
+    },
+    {
+      "name": "huggingface-hub",
+      "version_range": "*",
+      "import_names": [
+        "huggingface_hub"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "idna",
+      "version_range": "*",
+      "import_names": [
+        "idna"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "itsdangerous",
+      "version_range": "*",
+      "import_names": [
+        "itsdangerous"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "jinja2",
+      "version_range": "*",
+      "import_names": [
+        "jinja2"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "jmespath",
+      "version_range": "*",
+      "import_names": [
+        "jmespath"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "joblib",
+      "version_range": "*",
+      "import_names": [
+        "joblib"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "lightgbm",
+      "version_range": "*",
+      "import_names": [
+        "lightgbm"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "cmake"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libgomp1"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Same OpenMP runtime requirement as xgboost: libgomp1 is needed even with the wheel."
+    },
+    {
+      "name": "llvmlite",
+      "version_range": "*",
+      "import_names": [
+        "llvmlite"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "cmake",
+          "llvm-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "inferred",
+      "confidence": 0.78,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. A source build requires a specific LLVM major version matching the llvmlite release - brittle, strongly prefer the wheel."
+    },
+    {
+      "name": "lxml",
+      "version_range": "*",
+      "import_names": [
+        "lxml.etree"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libxml2-dev",
+          "libxslt1-dev",
+          "zlib1g-dev"
+        ],
+        "alpine": [
+          "gcc",
+          "musl-dev",
+          "python3-dev",
+          "libxml2-dev",
+          "libxslt-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libxml2",
+          "libxslt1.1"
+        ],
+        "alpine": [
+          "libxml2",
+          "libxslt"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.93,
+      "verified_by_build": false,
+      "notes": "Debian build package is libxslt1-dev (the bare libxslt-dev name is Alpine's) - the spec 7.1 example entry has the Alpine name under the debian key. Wheel availability is TRUE: lxml has shipped manylinux and musllinux wheels for years (v1 claimed false). Runtime libs are listed because lxml is genuinely and frequently source-built on non-mainstream targets."
+    },
+    {
+      "name": "lz4",
+      "version_range": "*",
+      "import_names": [
+        "lz4"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "liblz4-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.82,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: liblz4-1."
+    },
+    {
+      "name": "markupsafe",
+      "version_range": "*",
+      "import_names": [
+        "markupsafe"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. The C speedup is optional; it falls back to pure Python."
+    },
+    {
+      "name": "matplotlib",
+      "version_range": "*",
+      "import_names": [
+        "matplotlib"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "pkg-config",
+          "libfreetype6-dev",
+          "libpng-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libfreetype6, libpng16-16. The Agg backend needs no X libraries; only interactive backends would."
+    },
+    {
+      "name": "msgpack",
+      "version_range": "*",
+      "import_names": [
+        "msgpack"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "multidict",
+      "version_range": "*",
+      "import_names": [
+        "multidict"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "mysqlclient",
+      "version_range": "*",
+      "import_names": [
+        "MySQLdb"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "default-libmysqlclient-dev",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libmariadb3"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": false,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Import name is not derivable. Cited in spec 7.3 as a wheel-still-needs-runtime-deps case: the C extension links libmariadb, so libmariadb3 is required at runtime. Contrast with the pure-Python pymysql entry."
+    },
+    {
+      "name": "netifaces",
+      "version_range": "*",
+      "import_names": [
+        "netifaces"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "numba",
+      "version_range": "*",
+      "import_names": [
+        "numba"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Relies on llvmlite, which carries the heavy native payload."
+    },
+    {
+      "name": "numpy",
+      "version_range": "*",
+      "import_names": [
+        "numpy"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "pkg-config",
+          "libopenblas-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libopenblas0 when linked against system BLAS. Build backend (meson-python) is fetched from PyPI, not apt."
+    },
+    {
+      "name": "opencv-python",
+      "version_range": "*",
+      "import_names": [
+        "cv2"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libgl1",
+          "libglib2.0-0"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "The canonical case where a wheel exists but runtime system libs are STILL required: the wheel does not vendor libGL or glib. Add libsm6/libxext6/libxrender1 only if GUI (highgui) functions are used. libglib2.0-0 is libglib2.0-0t64 on trixie."
+    },
+    {
+      "name": "opencv-python-headless",
+      "version_range": "*",
+      "import_names": [
+        "cv2"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libglib2.0-0"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Same import name as opencv-python but drops the libgl1 requirement - the headless build has no GUI backend. Per-package precision: picking the wrong one of this pair either breaks the image or bloats it."
+    },
+    {
+      "name": "oracledb",
+      "version_range": "*",
+      "import_names": [
+        "oracledb"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. python-oracledb thin mode needs no Oracle Instant Client; thick mode does (not modelled)."
+    },
+    {
+      "name": "orjson",
+      "version_range": "*",
+      "import_names": [
+        "orjson"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Rust extension; source builds need a nightly-capable cargo/rustc."
+    },
+    {
+      "name": "packaging",
+      "version_range": "*",
+      "import_names": [
+        "packaging"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "pandas",
+      "version_range": "*",
+      "import_names": [
+        "pandas"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Cython/C++ extensions only; no external native library."
+    },
+    {
+      "name": "paramiko",
+      "version_range": "*",
+      "import_names": [
+        "paramiko"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Its crypto is delegated to the cryptography/pynacl distributions, which carry their own entries."
+    },
+    {
+      "name": "pillow",
+      "version_range": "*",
+      "import_names": [
+        "PIL",
+        "PIL.Image"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libjpeg-dev",
+          "zlib1g-dev",
+          "libtiff-dev",
+          "libfreetype6-dev",
+          "liblcms2-dev",
+          "libwebp-dev",
+          "libopenjp2-7-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libjpeg62-turbo, zlib1g, libfreetype6, liblcms2-2, libopenjp2-7, plus libtiff6/libwebp7 on bookworm (libtiff5/libwebp6 on bullseye - these two names are release-dependent)."
+    },
+    {
+      "name": "polars",
+      "version_range": "*",
+      "import_names": [
+        "polars"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Rust extension; wheels are universal."
+    },
+    {
+      "name": "protobuf",
+      "version_range": "*",
+      "import_names": [
+        "google.protobuf"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Import name is not derivable (namespace package). The pure-Python fallback implementation works without the C++ accelerator."
+    },
+    {
+      "name": "psutil",
+      "version_range": "*",
+      "import_names": [
+        "psutil"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.93,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "psycopg2",
+      "version_range": "*",
+      "import_names": [
+        "psycopg2"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libpq-dev"
+        ],
+        "alpine": [
+          "gcc",
+          "musl-dev",
+          "python3-dev",
+          "postgresql-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libpq5"
+        ],
+        "alpine": [
+          "libpq"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": false,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Source-only distribution on PyPI: always compiles, needs libpq-dev headers to build and only the libpq5 shared library at runtime. The -dev/-runtime asymmetry here is the mechanism by which multi-stage shrinks the image."
+    },
+    {
+      "name": "psycopg2-binary",
+      "version_range": "*",
+      "import_names": [
+        "psycopg2"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Same import name as psycopg2 but the opposite classification: ships manylinux wheels that statically bundle libpq, so it needs neither libpq-dev to build nor libpq5 at runtime. Conflating the two is the classic per-package-precision failure."
+    },
+    {
+      "name": "pyarrow",
+      "version_range": "*",
+      "import_names": [
+        "pyarrow"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "cmake",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Building from source additionally requires the Arrow C++ libraries and is impractical in a normal build stage - strongly prefer the wheel."
+    },
+    {
+      "name": "pycairo",
+      "version_range": "*",
+      "import_names": [
+        "cairo"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libcairo2-dev",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libcairo2"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": false,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Import name is not derivable. Source-only; links the system cairo, so libcairo2 is required at runtime."
+    },
+    {
+      "name": "pycryptodome",
+      "version_range": "*",
+      "import_names": [
+        "Crypto"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Import name is not derivable (pycryptodome -> Crypto) and collides with the abandoned pycrypto distribution."
+    },
+    {
+      "name": "pycurl",
+      "version_range": "*",
+      "import_names": [
+        "pycurl"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libcurl4-openssl-dev",
+          "libssl-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libcurl4"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "No usable manylinux wheel: compiles against the system libcurl. Clean -dev/runtime split (libcurl4-openssl-dev -> libcurl4)."
+    },
+    {
+      "name": "pydantic",
+      "version_range": "*",
+      "import_names": [
+        "pydantic"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. v2 moved the hot path into the separate pydantic-core distribution, which has its own entry - so pydantic itself correctly has empty lists."
+    },
+    {
+      "name": "pydantic-core",
+      "version_range": "*",
+      "import_names": [
+        "pydantic_core"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Rust extension. Wheels are universal; a source build needs cargo and rustc. Split out from pydantic in v2."
+    },
+    {
+      "name": "pyjwt",
+      "version_range": "*",
+      "import_names": [
+        "jwt"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Import name is not derivable from the distribution name."
+    },
+    {
+      "name": "pymongo",
+      "version_range": "*",
+      "import_names": [
+        "pymongo",
+        "bson"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Ships two importable top-level modules."
+    },
+    {
+      "name": "pymysql",
+      "version_range": "*",
+      "import_names": [
+        "pymysql"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Pure-Python MySQL driver - deliberate contrast with mysqlclient, which is a C extension against libmysql/libmariadb."
+    },
+    {
+      "name": "pynacl",
+      "version_range": "*",
+      "import_names": [
+        "nacl"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libffi-dev",
+          "make"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Import name is not derivable. Vendors and builds libsodium during a source build, hence make."
+    },
+    {
+      "name": "pyodbc",
+      "version_range": "*",
+      "import_names": [
+        "pyodbc"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "unixodbc-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libodbc2"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "inferred",
+      "confidence": 0.7,
+      "verified_by_build": false,
+      "notes": "Links unixODBC. Runtime package is libodbc2 on bookworm but libodbc1 on bullseye - release-dependent, needs container verification. A driver (e.g. msodbcsql) is also required but is out of scope."
+    },
+    {
+      "name": "python-dateutil",
+      "version_range": "*",
+      "import_names": [
+        "dateutil"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Import name is not derivable from the distribution name."
+    },
+    {
+      "name": "python-dotenv",
+      "version_range": "*",
+      "import_names": [
+        "dotenv"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Import name is not derivable from the distribution name."
+    },
+    {
+      "name": "python-ldap",
+      "version_range": "*",
+      "import_names": [
+        "ldap"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libldap2-dev",
+          "libsasl2-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libldap-2.5-0",
+          "libsasl2-2"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": false,
+      "source": "inferred",
+      "confidence": 0.72,
+      "verified_by_build": false,
+      "notes": "Import name is not derivable. Source-only. Runtime libldap package name is release-dependent (libldap-2.5-0 on bookworm, libldap-2.4-2 on bullseye) - needs container verification."
+    },
+    {
+      "name": "python-magic",
+      "version_range": "*",
+      "import_names": [
+        "magic"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libmagic1"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.93,
+      "verified_by_build": false,
+      "notes": "Pure-Python ctypes binding, so no build deps - but it dlopen()s libmagic at import time, so libmagic1 IS required at runtime. A blanket 'pure Python => no system deps' rule gets this wrong."
+    },
+    {
+      "name": "pytz",
+      "version_range": "*",
+      "import_names": [
+        "pytz"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "pyyaml",
+      "version_range": "*",
+      "import_names": [
+        "yaml"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Import name is not derivable. libyaml-dev is optional and only enables the faster CLoader."
+    },
+    {
+      "name": "pyzmq",
+      "version_range": "*",
+      "import_names": [
+        "zmq"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "libzmq3-dev",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is not derivable. Wheels vendor libzmq; source-build runtime: libzmq5."
+    },
+    {
+      "name": "redis",
+      "version_range": "*",
+      "import_names": [
+        "redis"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Pure-Python Redis client; the optional hiredis speedup is a separate distribution."
+    },
+    {
+      "name": "regex",
+      "version_range": "*",
+      "import_names": [
+        "regex"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.93,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "reportlab",
+      "version_range": "*",
+      "import_names": [
+        "reportlab"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libjpeg-dev",
+          "zlib1g-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.82,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libjpeg62-turbo, zlib1g."
+    },
+    {
+      "name": "requests",
+      "version_range": "*",
+      "import_names": [
+        "requests"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "rich",
+      "version_range": "*",
+      "import_names": [
+        "rich"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "s3transfer",
+      "version_range": "*",
+      "import_names": [
+        "s3transfer"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.95,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "safetensors",
+      "version_range": "*",
+      "import_names": [
+        "safetensors"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Rust extension from the Hugging Face stack."
+    },
+    {
+      "name": "scikit-image",
+      "version_range": "*",
+      "import_names": [
+        "skimage"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is not derivable."
+    },
+    {
+      "name": "scikit-learn",
+      "version_range": "*",
+      "import_names": [
+        "sklearn"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "libopenblas-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.91,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Import name is not derivable from the distribution name. source-build runtime: libgomp1, libopenblas0."
+    },
+    {
+      "name": "scipy",
+      "version_range": "*",
+      "import_names": [
+        "scipy"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "gfortran",
+          "python3-dev",
+          "pkg-config",
+          "libopenblas-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libopenblas0, libgfortran5. Needs a Fortran compiler to build, unlike numpy."
+    },
+    {
+      "name": "sentencepiece",
+      "version_range": "*",
+      "import_names": [
+        "sentencepiece"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "cmake",
+          "pkg-config"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.82,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Source build compiles the bundled C++ library."
+    },
+    {
+      "name": "shapely",
+      "version_range": "*",
+      "import_names": [
+        "shapely"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "libgeos-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. source-build runtime: libgeos-c1v5. Wheels vendor GEOS."
+    },
+    {
+      "name": "six",
+      "version_range": "*",
+      "import_names": [
+        "six"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.98,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "sniffio",
+      "version_range": "*",
+      "import_names": [
+        "sniffio"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "soupsieve",
+      "version_range": "*",
+      "import_names": [
+        "soupsieve"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "sqlalchemy",
+      "version_range": "*",
+      "import_names": [
+        "sqlalchemy"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. C extensions are optional accelerators."
+    },
+    {
+      "name": "starlette",
+      "version_range": "*",
+      "import_names": [
+        "starlette"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "statsmodels",
+      "version_range": "*",
+      "import_names": [
+        "statsmodels"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "manylinux wheels vendor this library's shared dependencies, so the typical install needs nothing at runtime. Cython extensions over numpy/scipy."
+    },
+    {
+      "name": "tensorflow",
+      "version_range": "*",
+      "import_names": [
+        "tensorflow"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "inferred",
+      "confidence": 0.65,
+      "verified_by_build": false,
+      "notes": "Wheels are large and largely self-contained. No runtime apt packages asserted. LOW CONFIDENCE - needs container verification; also requires a reasonably modern glibc, so bullseye targets should be checked."
+    },
+    {
+      "name": "tokenizers",
+      "version_range": "*",
+      "import_names": [
+        "tokenizers"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "cargo",
+          "rustc",
+          "python3-dev",
+          "gcc"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Rust extension from the Hugging Face stack."
+    },
+    {
+      "name": "torch",
+      "version_range": "*",
+      "import_names": [
+        "torch"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libgomp1"
+        ]
+      },
+      "extras": {
+        "cuda": {
+          "notes": "CUDA builds must be paired with an nvidia/cuda:*-runtime-* base image per spec 9.1, not with apt packages."
+        }
+      },
+      "wheel_typically_available": true,
+      "source": "inferred",
+      "confidence": 0.7,
+      "verified_by_build": false,
+      "notes": "Wheels are self-contained and vendor most libraries; libgomp1 is listed conservatively because missing-libgomp reports are common on slim bases and a missing runtime lib is a FAILURE while an extra 150KB is negligible. LOW CONFIDENCE - tools/verify_imports.py must settle whether libgomp1 is actually required."
+    },
+    {
+      "name": "tqdm",
+      "version_range": "*",
+      "import_names": [
+        "tqdm"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "transformers",
+      "version_range": "*",
+      "import_names": [
+        "transformers"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.94,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Heavy ML package but itself pure Python; compiled work lives in torch/tokenizers/safetensors."
+    },
+    {
+      "name": "typer",
+      "version_range": "*",
+      "import_names": [
+        "typer"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.96,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "typing-extensions",
+      "version_range": "*",
+      "import_names": [
+        "typing_extensions"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control. Hyphen-to-underscore, not the identity mapping."
+    },
+    {
+      "name": "ujson",
+      "version_range": "*",
+      "import_names": [
+        "ujson"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "urllib3",
+      "version_range": "*",
+      "import_names": [
+        "urllib3"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "uvloop",
+      "version_range": "*",
+      "import_names": [
+        "uvloop"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.9,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Vendors libuv. Pulled in by uvicorn[standard]."
+    },
+    {
+      "name": "uwsgi",
+      "version_range": "*",
+      "import_names": [],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev",
+          "libpcre3-dev",
+          "libssl-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libpcre3"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": false,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Source-only: always compiles. No importable module, so spec 10.2 Test C (console script) covers it, not Test A. libpcre3/libpcre3-dev are the bookworm names; PCRE1 is dropped in trixie, where PCRE2 (libpcre2-8-0) applies."
+    },
+    {
+      "name": "weasyprint",
+      "version_range": "*",
+      "import_names": [
+        "weasyprint"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libpango-1.0-0",
+          "libpangoft2-1.0-0",
+          "libharfbuzz0b",
+          "libcairo2",
+          "libffi8"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "inferred",
+      "confidence": 0.75,
+      "verified_by_build": false,
+      "notes": "Pure Python but dlopen()s the Pango/Cairo stack at runtime. Runtime names are bookworm; libffi8 is libffi7 on bullseye. Needs container verification."
+    },
+    {
+      "name": "werkzeug",
+      "version_range": "*",
+      "import_names": [
+        "werkzeug"
+      ],
+      "build_time_system_deps": {
+        "debian": []
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.97,
+      "verified_by_build": false,
+      "notes": "Pure Python (no compiled extension, no external shared library). Empty dep lists are correct and deliberate - negative control."
+    },
+    {
+      "name": "xgboost",
+      "version_range": "*",
+      "import_names": [
+        "xgboost"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "g++",
+          "python3-dev",
+          "cmake"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": [
+          "libgomp1"
+        ]
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.88,
+      "verified_by_build": false,
+      "notes": "Wheel exists AND libgomp1 is genuinely required at runtime - the wheel links OpenMP dynamically. A well-known slim-image import failure."
+    },
+    {
+      "name": "yarl",
+      "version_range": "*",
+      "import_names": [
+        "yarl"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.92,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime."
+    },
+    {
+      "name": "zstandard",
+      "version_range": "*",
+      "import_names": [
+        "zstandard"
+      ],
+      "build_time_system_deps": {
+        "debian": [
+          "gcc",
+          "python3-dev"
+        ]
+      },
+      "runtime_system_deps": {
+        "debian": []
+      },
+      "extras": {},
+      "wheel_typically_available": true,
+      "source": "curated",
+      "confidence": 0.85,
+      "verified_by_build": false,
+      "notes": "Compiled extension with no external native library: a source build needs only a toolchain, and the wheel needs nothing at runtime. Vendors libzstd; can optionally link the system one."
+    }
+  ]
+}

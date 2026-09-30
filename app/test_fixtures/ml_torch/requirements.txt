@@ -1,0 +1,5 @@
+torch==2.1.0
+numpy>=1.24 ; python_version >= "3.9"
+scikit-learn
+# pulled from an internal index in CI
+--extra-index-url https://download.pytorch.org/whl/cpu
