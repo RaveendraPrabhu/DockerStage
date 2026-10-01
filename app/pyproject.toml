@@ -29,5 +29,9 @@ pythonpath = ["."]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 
-[tool.setuptools]
-packages = ["dockerstage"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dockerstage*"]
+
+[tool.setuptools.package-data]
+dockerstage = ["data/*.json", "data/*.yaml"]

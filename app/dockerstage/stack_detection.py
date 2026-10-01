@@ -26,6 +26,18 @@ class StackDetectionResult:
     scores: dict[str, int] = field(default_factory=dict)
     config_used: dict[str, Any] = field(default_factory=dict)
 
+    def report_lines(self) -> list[str]:
+        w = self.config_used.get("weights", {})
+        thr = self.config_used.get("thresholds", {})
+        return [
+            f"primary_language={self.primary_language}",
+            f"secondary_languages={self.secondary_languages}",
+            f"architecture_type={self.architecture_type}",
+            f"scores={self.scores}",
+            f"weights_used={w}",
+            f"secondary_threshold={thr.get('secondary_language')}",
+        ]
+
 
 def _load_config() -> dict[str, Any]:
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
@@ -81,7 +93,7 @@ def detect_architecture(parsed: ParsedDockerfile) -> str:
         if not instr:
             continue
         raw = instr.raw.lower()
-        if any(kw in raw for kw in ["uvicorn", "gunicorn", "flask", "django", "node", "npm"]):
+        if any(kw in raw for kw in ["uvicorn", "gunicorn", "flask", "django"]):
             has_web_framework = True
             is_web = True
             
@@ -129,7 +141,7 @@ def detect_stack(parsed: ParsedDockerfile, config_override: dict | None = None) 
     secondary = []
     secondary_threshold = thresholds.get("secondary_language", 5)
     for lang, score in sorted_langs[1:]:
-        if score >= secondary_threshold:
+        if score > secondary_threshold:
             secondary.append(lang)
             
     return StackDetectionResult(

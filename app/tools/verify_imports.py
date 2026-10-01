@@ -39,14 +39,16 @@ def build_cmd(entry: dict, image: str = DEFAULT_IMAGE) -> list[str]:
 
     Pure function (no I/O) so it's unit-testable offline.
     """
+    build_deps = entry.get("build_time_system_deps", {}).get("debian", [])
     runtime_deps = entry.get("runtime_system_deps", {}).get("debian", [])
+    deps = list(dict.fromkeys(build_deps + runtime_deps))
     imports = entry["import_names"]
     name = entry["name"]
 
     steps = ["set -e"]
-    if runtime_deps:
+    if deps:
         steps.append("apt-get update -qq")
-        steps.append("apt-get install -y --no-install-recommends " + " ".join(runtime_deps))
+        steps.append("apt-get install -y --no-install-recommends " + " ".join(deps))
     steps.append(f"pip install --quiet --no-input '{name}'")
     steps.append("python -c '" + "; ".join(f"import {m}" for m in imports) + "'")
     script = " && ".join(steps)
@@ -96,11 +98,12 @@ def main() -> int:
 
 def _selftest() -> int:
     psycopg2 = {"name": "psycopg2", "import_names": ["psycopg2"],
+                "build_time_system_deps": {"debian": ["libpq-dev"]},
                 "runtime_system_deps": {"debian": ["libpq5"]}}
     cmd = build_cmd(psycopg2)
     assert cmd[:5] == ["docker", "run", "--rm", "python:3.11-slim", "bash"]
     script = cmd[-1]
-    assert "apt-get install -y --no-install-recommends libpq5" in script
+    assert "apt-get install -y --no-install-recommends libpq-dev libpq5" in script
     assert "pip install --quiet --no-input 'psycopg2'" in script
     assert "python -c 'import psycopg2'" in script
 

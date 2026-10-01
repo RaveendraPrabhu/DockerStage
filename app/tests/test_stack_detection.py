@@ -62,3 +62,30 @@ def test_batch_job_detection():
     res = detect_stack(parsed)
     assert res.architecture_type == "BATCH_JOB"
 
+
+def test_architecture_classification_flip():
+    # HIGH-3: WEB_API vs BATCH_JOB correct on fixtures that differ only in EXPOSE/CMD
+    for tok in available_tokenizers():
+        web_parsed = parse_dockerfile(fixture("web_api_min", "Dockerfile"), tokenizer=tok)
+        batch_parsed = parse_dockerfile(fixture("batch_job_min", "Dockerfile"), tokenizer=tok)
+        
+        web_res = detect_stack(web_parsed)
+        batch_res = detect_stack(batch_parsed)
+        
+        assert web_res.architecture_type == "WEB_API"
+        assert batch_res.architecture_type == "BATCH_JOB"
+
+
+def test_config_values_in_report():
+    # HIGH-4: Weights read from config; the config values used appear in the report
+    from dockerstage.models import ParsedDockerfile
+    res = detect_stack(ParsedDockerfile())
+    
+    lines = res.report_lines()
+    report_text = "\n".join(lines)
+    
+    # Assert actual config weights appear in the report output
+    assert "weights_used=" in report_text
+    assert "'python': 10" in report_text
+    assert "secondary_threshold=5" in report_text
+

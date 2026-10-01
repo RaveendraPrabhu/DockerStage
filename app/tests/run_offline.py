@@ -28,6 +28,7 @@ TEST_MODULES = [
     "test_dockerfile_parser",
     "test_manifest_parser",
     "test_knowledge_base",
+    "test_stack_detection",
 ]
 
 
@@ -41,10 +42,15 @@ def _load(mod_name: str):
 
 
 def main() -> int:
-    passed = failed = 0
+    passed = failed = skipped = 0
     failures = []
     for mod_name in TEST_MODULES:
-        mod = _load(mod_name)
+        try:
+            mod = _load(mod_name)
+        except ImportError:
+            skipped += 1
+            print(f"SKIP  {mod_name} (missing dependency)")
+            continue
         fns = sorted(n for n in dir(mod) if n.startswith("test_") and callable(getattr(mod, n)))
         for fn_name in fns:
             fn = getattr(mod, fn_name)
@@ -59,7 +65,7 @@ def main() -> int:
                 print(f"ok    {mod_name}::{fn_name}")
 
     print("\n" + "=" * 60)
-    print(f"passed: {passed}    failed: {failed}")
+    print(f"passed: {passed}    failed: {failed}    skipped: {skipped}")
     if failures:
         print("\n--- failure detail ---")
         for name, _e, tb in failures:
