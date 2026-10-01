@@ -44,6 +44,7 @@ jobs:
       # + negative controls only -- source-only ones (psycopg2, mysqlclient) need
       # build deps and are import-verified by Phase 6's real build, not this smoke.
       # Full sweep on demand:  python app/tools/verify_imports.py
+      # See docs/phase2_verification.md for the full-sweep record.
       - name: Verify import names in a container (gate item 5, wheel subset)
         run: >
           python app/tools/verify_imports.py --only
