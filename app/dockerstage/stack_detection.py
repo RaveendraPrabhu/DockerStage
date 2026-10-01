@@ -44,14 +44,18 @@ def _load_config() -> dict[str, Any]:
         return yaml.safe_load(f)
 
 
-def _score_base_image(base_image: ImageRef | None, weights: dict[str, int], scores: dict[str, int]) -> None:
-    if not base_image or not base_image.image_name:
-        return
-    name = base_image.image_name.lower()
-    if name.startswith("python"):
-        scores["python"] = scores.get("python", 0) + weights.get("python", 0)
-    elif name.startswith("node"):
-        scores["node"] = scores.get("node", 0) + weights.get("node", 0)
+def _score_base_image(parsed: ParsedDockerfile, weights: dict[str, int], scores: dict[str, int]) -> None:
+    # Score the base image of EVERY stage, not just the final one (spec §6).
+    # A multi-stage build may have a Node builder stage feeding a Python runtime.
+    for stage in parsed.stages:
+        base_image = stage.base_image
+        if not base_image or not base_image.image_name:
+            continue
+        name = base_image.image_name.lower()
+        if name.startswith("python"):
+            scores["python"] = scores.get("python", 0) + weights.get("python", 0)
+        elif name.startswith("node"):
+            scores["node"] = scores.get("node", 0) + weights.get("node", 0)
 
 
 def _score_run_commands(parsed: ParsedDockerfile, weights: dict[str, int], scores: dict[str, int]) -> None:
@@ -59,7 +63,8 @@ def _score_run_commands(parsed: ParsedDockerfile, weights: dict[str, int], score
         raw = cmd.raw.lower()
         if "pip install" in raw or "pip3 install" in raw:
             scores["python"] = scores.get("python", 0) + weights.get("pip", 0)
-        if "npm install" in raw or "yarn install" in raw:
+        # Match any npm/yarn/pnpm invocation, not just "<pm> install".
+        if re.search(r"\b(npm|yarn|pnpm)\b", raw):
             scores["node"] = scores.get("node", 0) + weights.get("npm", 0)
 
 
@@ -122,7 +127,7 @@ def detect_stack(parsed: ParsedDockerfile, config_override: dict | None = None) 
     
     scores: dict[str, int] = {}
     
-    _score_base_image(parsed.base_image, weights.get("base_image", {}), scores)
+    _score_base_image(parsed, weights.get("base_image", {}), scores)
     _score_run_commands(parsed, weights.get("run_command", {}), scores)
     _score_cmd_keyword(parsed, weights.get("cmd_keyword", {}), scores)
     _score_copy_manifest(parsed, weights.get("copy_manifest", {}), scores)

@@ -89,3 +89,16 @@ def test_config_values_in_report():
     assert "'python': 10" in report_text
     assert "secondary_threshold=5" in report_text
 
+
+def test_multistage_hybrid_scores_builder_base_image():
+    for tok in available_tokenizers():
+        parsed = parse_dockerfile(fixture("multistage_hybrid", "Dockerfile"), tokenizer=tok)
+        res = detect_stack(parsed)
+        assert res.primary_language == "python"
+        assert "node" in res.secondary_languages
+        assert res.architecture_type == "WEB_API"
+        # Node base image lives in the non-final "frontend" stage.
+        # node = base(10) + npm install(5) + package.json(5) = 20.
+        # Without scoring every stage's base image, node tops out at 15,
+        # so this assertion fails unless LOW-5 is fixed.
+        assert res.scores.get("node", 0) > 15
